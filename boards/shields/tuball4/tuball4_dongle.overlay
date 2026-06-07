@@ -15,18 +15,32 @@
     transform = <&default_transform>;
 };
 
-&pointer_accel { // this needs to be put BEFORE input-listener
+&pointer_accel {
     input-type = <INPUT_EV_REL>;
     codes = <INPUT_REL_X INPUT_REL_Y>;
-    sensitivity = <800>;         // 0.8x base sensitivity
-	min-factor = <800>;			  // 0.8x minimum for percision
-    max-factor = <3000>;          // 3.0x maximum acceleration
-    acceleration-exponent = <1>;  // Advanced exponential curve (1-5)
-    y-boost = <1100>;             // 1.1x Y-axis boost for widescreen
-    speed-threshold = <900>;      // Start acceleration at 900 counts/sec, just 1.5 inch/sec
-    speed-max = <1800>;           // Max acceleration at 1800 counts/sec, just 3 inch/sec
-    min-factor = <1000>;          // 1.0x minimum (no deceleration)
-	sensor-dpi = <600>;
+
+    /* Base feel around 600 CPI */
+    sensitivity = <1000>;
+
+    /* Slow movements stay normal/precise */
+    min-factor = <1000>;
+
+    /* Fast movements ramp up to about 4x = 600 → 2400 feel */
+    max-factor = <4000>;
+
+    /* Smooth/simple acceleration curve */
+    acceleration-exponent = <1>;
+
+    /* Keep slight Y boost for widescreen */
+    y-boost = <1100>;
+
+    /* Start acceleration after small/normal movements */
+    speed-threshold = <700>;
+
+    /* Reach max acceleration during fast throws */
+    speed-max = <1800>;
+
+    sensor-dpi = <600>;
 };
 
 /* More about input processors: https://zmk.dev/docs/keymaps/input-processors#input-processors-overview */
