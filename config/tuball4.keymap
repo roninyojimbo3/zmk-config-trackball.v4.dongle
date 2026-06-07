@@ -49,16 +49,6 @@
             quick-tap-ms = <125>;
             bindings = <&mo>, <&mkp>;
         };
-
-        cpi_cycle: sensor_dpi_cycle {
-            compatible = "zmk,behavior-sensor-attr-cycle";
-            #binding-cells = <1>;
-            values = <300 600 1200 1800 2400>;
-            attr = <0>;
-            sensor_device = <&trackball>;
-            display-name = "CPI cycle";
-            persistant;
-        };
     };
 
     keymap {
@@ -220,8 +210,7 @@ BACK_LEFT {
         &trans        &trans
 
         /* Middle row */
-        &trans        &cpi_cycle(1)
-
+        &trans       &trans
         /* Top row */
         &trans        &trans        &trans        &trans
 
