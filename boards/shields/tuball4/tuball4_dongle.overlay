@@ -61,6 +61,14 @@
         >;
     };
 
+    /* layer-9 snipe / precision pointer */
+    snipe_pointer: snipe_pointer {
+        layers           = <9>;
+        input-processors = <
+            &zip_xy_scaler 1 4
+        >;
+    };
+
     /* layer-0 front Right Hand pointer */
     /* This default layer should not have any additional transformations. 
        All other layers will add to it, and then have all those extra steps removed
