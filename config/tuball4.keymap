@@ -78,7 +78,7 @@ FRONT_RIGHT {
         &mkp MB5                           &mkp MB4
 
         /* Top row: physical right, second, third, physical left */
-        &mo FRONT_SCROLL_RIGHT             &lt SNIPE ENTER      &lt EDIT ESC      &lt MEDIA MCLK
+        &mo FRONT_SCROLL_RIGHT             &lt DPI_UTIL ENTER      &lt EDIT ESC      &lt MEDIA MCLK
 
         /* Inner buttons - stock */
         &bt BT_CLR                         &bt BT_NXT          &studio_unlock
@@ -98,7 +98,7 @@ FRONT_LEFT {
         &mkp MB4                           &mkp MB5
 
         /* Top row: mirror of layer 0 */
-        &lt MEDIA MCLK     &lt EDIT ESC         &lt SNIPE ENTER   &mo FRONT_SCROLL_LEFT
+        &lt MEDIA MCLK     &lt EDIT ESC         &lt DPI_UTIL ENTER   &mo FRONT_SCROLL_LEFT
 
         /* Inner buttons */
         &trans                             &trans              &trans
@@ -115,7 +115,7 @@ BACK_RIGHT {
 
         &mkp MB5                           &mkp MB4
 
-        &mkp LCLK                          &lt EDIT ESC         &lt SNIPE ENTER   &mouse_layer_tap SNIPE RCLK
+        &mkp LCLK                          &lt EDIT ESC         &lt DPI_UTIL ENTER   &mouse_layer_tap SNIPE RCLK
 
         /* Inner buttons */
         &trans                             &trans              &trans
@@ -132,7 +132,7 @@ BACK_LEFT {
 
         &mkp MB4                           &mkp MB5
 
-        &mouse_layer_tap SNIPE RCLK        &lt SNIPE ENTER      &lt EDIT ESC      &mkp LCLK
+        &mouse_layer_tap SNIPE RCLK        &lt DPI_UTIL ENTER      &lt EDIT ESC      &mkp LCLK
 
         /* Inner buttons */
         &trans                             &trans              &trans
