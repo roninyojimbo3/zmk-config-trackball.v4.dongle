@@ -38,7 +38,29 @@
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 15    // default: 10
 //#include <dt-bindings/zmk/pointing.h>
 
-/ {
+/ { 
+    behaviors {
+        mouse_layer_tap: mouse_layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOUSE_LAYER_TAP";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <125>;
+            bindings = <&mo>, <&mkp>;
+        };
+
+        cpi_cycle: sensor_dpi_cycle {
+            compatible = "zmk,behavior-sensor-attr-cycle";
+            #binding-cells = <1>;
+            values = <300 600 1200 1800 2400>;
+            attr = <0>;
+            sensor_device = <&trackball>;
+            display-name = "CPI cycle";
+            persistant;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -56,65 +78,77 @@
 
 // &mkp LCLK &mkp MCLK &mkp RCLK  &none
 
-	// Layer 0
+// Layer 0
 FRONT_RIGHT {
     bindings = <
-        &mkp RCLK              &mkp LCLK
-        &lt DPI_UTIL MCLK      &lt DPI_UTIL MCLK
-        &mo FRONT_SCROLL_RIGHT &lt SNIPE ENTER &lt EDIT ESC &lt MEDIA RCLK
+        /* Bottom row: physical right, physical left */
+        &mouse_layer_tap MEDIA RCLK        &mkp LCLK
 
-        /* Inner Buttons - DO NOT CHANGE */
-        &bt BT_CLR &bt BT_NXT &studio_unlock
+        /* Middle row: physical left, physical right */
+        &mkp MB5                           &mkp MB4
 
-        /* Orientation / handedness - DO NOT CHANGE */
-        &mo 2 &mo 1
+        /* Top row: physical right, second, third, physical left */
+        &mo FRONT_SCROLL_RIGHT             &lt SNIPE ENTER      &lt EDIT ESC      &mouse_layer_tap DPI_UTIL MCLK
+
+        /* Inner buttons - stock */
+        &bt BT_CLR                         &bt BT_NXT          &studio_unlock
+
+        /* Orientation / handedness - stock */
+        &mo 2                              &mo 1
     >;
 };
 
-
-	// Layer 1
+// Layer 1
 FRONT_LEFT {
     bindings = <
-        &mkp LCLK              &mkp RCLK
-        &lt DPI_UTIL MCLK      &lt DPI_UTIL MCLK
-        &lt EDIT ESC           &lt SNIPE ENTER &lt SNIPE ENTER &mo FRONT_SCROLL_LEFT
+        /* Bottom row: mirror of layer 0 */
+        &mkp LCLK                          &mouse_layer_tap MEDIA RCLK
 
-        /* Inner Buttons - transparent */
-        &trans &trans &trans
+        /* Middle row: mirror of layer 0 */
+        &mkp MB4                           &mkp MB5
 
-        /* Orientation / handedness - transparent */
-        &trans &trans
+        /* Top row: mirror of layer 0 */
+        &mouse_layer_tap DPI_UTIL MCLK     &lt EDIT ESC         &lt SNIPE ENTER   &mo FRONT_SCROLL_LEFT
+
+        /* Inner buttons */
+        &trans                             &trans              &trans
+
+        /* Orientation / handedness */
+        &trans                             &trans
     >;
 };
 
-
-	// Layer 2
+// Layer 2
 BACK_RIGHT {
     bindings = <
-        &lt EDIT ESC              &mo BACKWARD_SCROLL_RIGHT
-        &lt DPI_UTIL MCLK         &lt DPI_UTIL MCLK
-        &mkp LCLK                 &lt SNIPE ENTER &lt SNIPE ENTER &mkp RCLK
+        &mouse_layer_tap DPI_UTIL MCLK     &mo BACKWARD_SCROLL_RIGHT
 
-        /* Inner Buttons - transparent */
-        &trans &trans &trans
+        &mkp MB5                           &mkp MB4
 
-        /* Orientation / handedness - transparent */
-        &trans &trans
+        &mkp LCLK                          &lt EDIT ESC         &lt SNIPE ENTER   &mouse_layer_tap MEDIA RCLK
+
+        /* Inner buttons */
+        &trans                             &trans              &trans
+
+        /* Orientation / handedness */
+        &trans                             &trans
     >;
 };
- 
-	// Layer 3
+
+// Layer 3
 BACK_LEFT {
     bindings = <
-        &mo BACKWARD_SCROLL_LEFT &lt EDIT ESC
-        &lt DPI_UTIL MCLK        &lt DPI_UTIL MCLK
-        &mkp RCLK                &lt SNIPE ENTER &lt SNIPE ENTER &mkp LCLK
+        &mo BACKWARD_SCROLL_LEFT           &mouse_layer_tap DPI_UTIL MCLK
 
-        /* Inner Buttons - transparent */
-        &trans &trans &trans
+        &mkp MB4                           &mkp MB5
 
-        /* Orientation / handedness - transparent */
-        &trans &trans
+        &mouse_layer_tap MEDIA RCLK        &lt SNIPE ENTER      &lt EDIT ESC      &mkp LCLK
+
+        /* Inner buttons */
+        &trans                             &trans              &trans
+
+        /* Orientation / handedness */
+        &trans                             &trans
     >;
 };
  
@@ -180,59 +214,76 @@ BACK_LEFT {
 	      >;
 	};
 
-       /* 8 */ DPI_UTIL {
+/* 8 */ DPI_UTIL {
     bindings = <
-        &trans &trans
-        &trans &trans
-        &trans &trans &trans &trans
+        /* Bottom row */
+        &trans        &trans
 
-        /* Inner Buttons - dedicated physical buttons, keep transparent */
-        &trans &trans &trans
+        /* Middle row */
+        &trans        &cpi_cycle(1)
 
-        /* Orientation / handedness switches - keep transparent */
-        &trans &trans
+        /* Top row */
+        &trans        &trans        &trans        &trans
+
+        /* Inner Buttons - keep dedicated */
+        &trans        &trans        &trans
+
+        /* Orientation / handedness - keep dedicated */
+        &trans        &trans
     >;
 };
 
 /* 9 */ SNIPE {
     bindings = <
         &trans &trans
+
         &trans &trans
+
         &trans &trans &trans &trans
 
-        /* Inner Buttons - dedicated physical buttons, keep transparent */
+        /* Inner Buttons - keep dedicated */
         &trans &trans &trans
 
-        /* Orientation / handedness switches - keep transparent */
+        /* Orientation / handedness - keep dedicated */
         &trans &trans
     >;
 };
 
 /* 10 */ EDIT {
     bindings = <
-        &kp LC(Z)       &kp LC(X)
-        &kp LC(C)       &kp LC(V)
-        &kp LS(LC(Z))   &trans &trans &trans
+        /* Bottom row: physical right, physical left */
+        &kp LS(LC(Z)) &kp LC(Z)
 
-        /* Inner Buttons - dedicated physical buttons, keep transparent */
-        &trans &trans &trans
+        /* Middle row */
+        &trans        &trans
 
-        /* Orientation / handedness switches - keep transparent */
-        &trans &trans
+        /* Top row: physical right, second, third, physical left */
+        &kp LC(V)     &kp LC(C)     &trans        &kp LC(X)
+
+        /* Inner buttons - keep dedicated */
+        &trans        &trans        &trans
+
+        /* Orientation / handedness - keep dedicated */
+        &trans        &trans
     >;
 };
 
 /* 11 */ MEDIA {
     bindings = <
-        &kp C_PREV      &kp C_PP
-        &kp C_NEXT      &kp C_MUTE
-        &kp C_VOL_DN    &kp C_VOL_UP &trans &trans
+        /* Bottom row: physical right, physical left */
+        &trans        &trans
 
-        /* Inner Buttons - dedicated physical buttons, keep transparent */
-        &trans &trans &trans
+        /* Middle row: physical left, physical right */
+        &kp C_VOL_DN  &kp C_VOL_UP
 
-        /* Orientation / handedness switches - keep transparent */
-        &trans &trans
+        /* Top row: physical right, second, third, physical left */
+        &kp C_MUTE    &kp C_PP      &kp C_NEXT    &kp C_PREV
+
+        /* Inner Buttons - keep dedicated */
+        &trans        &trans        &trans
+
+        /* Orientation / handedness - keep dedicated */
+        &trans        &trans
     >;
 };
 
