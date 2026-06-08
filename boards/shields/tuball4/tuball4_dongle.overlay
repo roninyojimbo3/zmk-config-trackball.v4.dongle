@@ -19,26 +19,15 @@
     input-type = <INPUT_EV_REL>;
     codes = <INPUT_REL_X INPUT_REL_Y>;
 
-    /* Base feel around 600 CPI */
     sensitivity = <1000>;
-
-    /* Slow movements stay normal/precise */
     min-factor = <1000>;
+    max-factor = <6000>;
 
-    /* Fast movements ramp up to about 4x = 600 → 2400 feel */
-    max-factor = <4000>;
+    acceleration-exponent = <2>;
+    y-boost = <1000>;
 
-    /* Smooth/simple acceleration curve */
-    acceleration-exponent = <1>;
-
-    /* Keep slight Y boost for widescreen */
-    y-boost = <1100>;
-
-    /* Start acceleration after small/normal movements */
-    speed-threshold = <700>;
-
-    /* Reach max acceleration during fast throws */
-    speed-max = <1800>;
+    speed-threshold = <300>;
+    speed-max = <900>;
 
     sensor-dpi = <600>;
 };
